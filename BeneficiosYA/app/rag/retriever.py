@@ -1,54 +1,58 @@
-"""
-Motor de recuperación de información usando BM25.
-Si no hay documentos cargados, devuelve contexto vacío.
-"""
+"""Motor de recuperación BM25 sobre documentos oficiales."""
 
 from rank_bm25 import BM25Okapi
 from app.rag.loader import load_documents
+from app.constants import RAG_TOP_K, RAG_MIN_SCORE
 
-_index: BM25Okapi | None = None
-_chunks: list[str] = []
-_sources: list[str] = []
+
+class DocumentRetriever:
+    """Encapsula el índice BM25 y la búsqueda sobre documentos cargados."""
+
+    def __init__(self) -> None:
+        self._index: BM25Okapi | None = None
+        self._chunks: list[str] = []
+        self._sources: list[str] = []
+
+    @property
+    def is_ready(self) -> bool:
+        return self._index is not None and bool(self._chunks)
+
+    def build(self) -> None:
+        """Construye el índice a partir de los documentos en /documents."""
+        documents = load_documents()
+        if not documents:
+            print("[RAG] Sin documentos en /documents. El agente usará solo su conocimiento base.")
+            return
+
+        self._chunks = [chunk for doc in documents for chunk in doc["chunks"]]
+        self._sources = [doc["source"] for doc in documents for _ in doc["chunks"]]
+
+        self._index = BM25Okapi([c.lower().split() for c in self._chunks])
+        print(f"[RAG] Índice construido: {len(self._chunks)} fragmentos de {len(documents)} documento(s)")
+
+    def search(self, query: str, top_k: int = RAG_TOP_K) -> str:
+        """Retorna los fragmentos más relevantes para una consulta."""
+        if not self.is_ready:
+            return ""
+
+        scores = self._index.get_scores(query.lower().split())  # type: ignore[union-attr]
+        ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
+
+        results = [
+            f"[Fuente: {self._sources[i]}]\n{self._chunks[i]}"
+            for i in ranked[:top_k]
+            if scores[i] >= RAG_MIN_SCORE
+        ]
+        return "\n\n---\n".join(results)
+
+
+# Singleton de la aplicación
+_retriever = DocumentRetriever()
 
 
 def build_index() -> None:
-    """Construye el índice BM25 a partir de los documentos cargados."""
-    global _index, _chunks, _sources
-
-    documents = load_documents()
-    if not documents:
-        print("[RAG] Sin documentos en /documents. El agente usará solo su conocimiento base.")
-        return
-
-    for doc in documents:
-        for chunk in doc["chunks"]:
-            _chunks.append(chunk)
-            _sources.append(doc["source"])
-
-    tokenized = [c.lower().split() for c in _chunks]
-    _index = BM25Okapi(tokenized)
-    print(f"[RAG] Índice construido: {len(_chunks)} fragmentos de {len(documents)} documento(s)")
+    _retriever.build()
 
 
-def retrieve(query: str, top_k: int = 4) -> str:
-    """Recupera los fragmentos más relevantes para una consulta."""
-    if _index is None or not _chunks:
-        return ""
-
-    tokens = query.lower().split()
-    scores = _index.get_scores(tokens)
-    top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_k]
-
-    results = []
-    seen_sources = set()
-    for idx in top_indices:
-        if scores[idx] < 0.1:
-            continue
-        source = _sources[idx]
-        results.append(f"[Fuente: {source}]\n{_chunks[idx]}")
-        seen_sources.add(source)
-
-    if not results:
-        return ""
-
-    return "\n\n---\n".join(results)
+def retrieve(query: str) -> str:
+    return _retriever.search(query)

@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, AsyncMock
 from app.agent.session import Session, UserProfile, get_session, delete_session
-from app.agent.chatbot import process_message, _build_context, _update_profile_from_response
+from app.agent.chatbot import process_message, _build_context, _refresh_profile_insights
 
 
 class TestSession:
@@ -47,7 +47,7 @@ class TestUpdateProfile:
         session.profile.material_piso = "tierra"
         session.profile.situacion_laboral = "desempleado"
         session.profile.num_personas_hogar = 5
-        _update_profile_from_response(session)
+        _refresh_profile_insights(session)
         assert session.sisben_aproximado in ("A", "B", "C", "D")
 
     def test_no_recalcula_sisben_si_ya_existe(self):
@@ -56,13 +56,13 @@ class TestUpdateProfile:
         session.profile.material_piso = "tierra"
         session.profile.situacion_laboral = "desempleado"
         session.profile.num_personas_hogar = 5
-        _update_profile_from_response(session)
+        _refresh_profile_insights(session)
         assert session.sisben_aproximado == "A"  # No debe cambiar
 
     def test_no_calcula_con_menos_de_tres_campos(self):
         session = Session(user_id="test_pocos_datos")
         session.profile.edad = 30
-        _update_profile_from_response(session)
+        _refresh_profile_insights(session)
         assert session.sisben_aproximado is None
 
 

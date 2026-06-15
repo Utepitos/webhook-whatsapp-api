@@ -1,10 +1,12 @@
 import json
 import anthropic
 from app.config import settings
-from app.agent.session import Session, UserProfile
+from app.agent.session import Session
 from app.agent.sisben import aproximar_grupo_sisben
-from app.agent.benefits import match_benefits, format_benefits_summary
+from app.agent.benefits import match_benefits
 from app.rag.retriever import retrieve
+from app.constants import CLAUDE_MODEL, MAX_TOKENS_CHAT, MAX_HISTORY_MESSAGES, MIN_PROFILE_FIELDS_FOR_SISBEN
+from app.vision.analyzer import analyze_house_image
 
 _SYSTEM_PROMPT = """Eres *BeneficiosYA*, un asistente social virtual del gobierno colombiano. Eres empático, paciente y hablas en lenguaje sencillo, usando el tuteo colombiano.
 
@@ -48,7 +50,7 @@ IMPORTANTE:
 • Si el usuario pregunta algo que no sabes, dilo honestamente y sugiere a dónde acudir
 """
 
-_FALLBACK_RESPONSE = """¡Hola! Soy *BeneficiosYA* 🇨🇴
+_NO_API_KEY_GREETING = """¡Hola! Soy *BeneficiosYA* 🇨🇴
 
 Estoy aquí para ayudarte a conocer los beneficios y programas del gobierno colombiano a los que puedes acceder.
 
@@ -56,29 +58,29 @@ Cuéntame un poco sobre tu situación: ¿cómo está tu familia? ¿Cuántas pers
 
 También puedes compartirme una foto de tu vivienda si quieres que te ayude a evaluar mejor tu situación."""
 
+_NO_API_KEY_FOLLOWUP = (
+    "Para darte una orientación personalizada necesito la API key de Claude. "
+    "Por favor revisa el archivo .env y agrega tu ANTHROPIC_API_KEY."
+)
+
 
 def _build_context(session: Session, user_message: str) -> str:
-    """Construye el contexto adicional para el agente."""
-    parts = []
+    """Reúne perfil acumulado, SISBEN estimado y fragmentos RAG relevantes."""
+    parts: list[str] = []
 
-    # Perfil acumulado
-    profile_dict = {k: v for k, v in vars(session.profile).items() if v is not None}
-    if profile_dict:
-        parts.append(f"PERFIL ACTUAL DEL USUARIO:\n{json.dumps(profile_dict, ensure_ascii=False, indent=2)}")
+    profile_data = {k: v for k, v in vars(session.profile).items() if v is not None}
+    if profile_data:
+        parts.append(f"PERFIL ACTUAL DEL USUARIO:\n{json.dumps(profile_data, ensure_ascii=False, indent=2)}")
 
-    # SISBEN aproximado si ya hay datos suficientes
     if session.sisben_aproximado:
         parts.append(f"SISBEN APROXIMADO: Grupo {session.sisben_aproximado}")
 
-    # Beneficios identificados
     if session.beneficios_identificados:
         parts.append(f"BENEFICIOS PREVIAMENTE IDENTIFICADOS: {', '.join(session.beneficios_identificados)}")
 
-    # Análisis de imagen si existe
     if session.profile.analisis_imagen:
         parts.append(f"ANÁLISIS DE IMAGEN DE VIVIENDA:\n{session.profile.analisis_imagen}")
 
-    # RAG: documentos relevantes
     rag_context = retrieve(user_message)
     if rag_context:
         parts.append(f"DOCUMENTOS DE REFERENCIA OFICIAL:\n{rag_context}")
@@ -86,73 +88,76 @@ def _build_context(session: Session, user_message: str) -> str:
     return "\n\n".join(parts)
 
 
-def _update_profile_from_response(session: Session) -> None:
-    """
-    Actualiza el SISBEN aproximado y beneficios cuando hay datos suficientes.
-    Se activa cuando el perfil tiene al menos 4 campos relevantes completos.
-    """
-    profile = session.profile
-    filled = sum(
-        1 for v in [
-            profile.edad, profile.situacion_laboral, profile.ingreso_mensual_aprox,
-            profile.material_piso, profile.acceso_agua_potable, profile.tenencia_vivienda,
-            profile.es_mujer_cabeza_hogar, profile.num_personas_hogar
-        ]
-        if v is not None
-    )
+def _refresh_profile_insights(session: Session) -> None:
+    """Recalcula el grupo SISBEN y beneficios elegibles cuando hay datos suficientes."""
+    if session.sisben_aproximado:
+        return
 
-    if filled >= 3 and not session.sisben_aproximado:
-        grupo, _ = aproximar_grupo_sisben(profile)
-        session.sisben_aproximado = grupo
-        matched = match_benefits(profile, grupo)
-        session.beneficios_identificados = [b["id"] for b in matched]
+    profile = session.profile
+    relevant_fields = [
+        profile.edad, profile.situacion_laboral, profile.ingreso_mensual_aprox,
+        profile.material_piso, profile.acceso_agua_potable, profile.tenencia_vivienda,
+        profile.es_mujer_cabeza_hogar, profile.num_personas_hogar,
+    ]
+    filled_count = sum(1 for v in relevant_fields if v is not None)
+
+    if filled_count < MIN_PROFILE_FIELDS_FOR_SISBEN:
+        return
+
+    grupo, _ = aproximar_grupo_sisben(profile)
+    session.sisben_aproximado = grupo
+    session.beneficios_identificados = [b["id"] for b in match_benefits(profile, grupo)]
+
+
+def _reply_without_claude(session: Session) -> str:
+    is_first_message = len(session.history) <= 1
+    return _NO_API_KEY_GREETING if is_first_message else _NO_API_KEY_FOLLOWUP
+
+
+async def _call_claude(session: Session, user_message: str) -> str:
+    context = _build_context(session, user_message)
+    history = session.get_recent_history(n=MAX_HISTORY_MESSAGES)
+
+    if context:
+        history = history[:-1] + [{
+            "role": "user",
+            "content": f"{context}\n\nMENSAJE DEL USUARIO: {user_message}",
+        }]
+
+    client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+    response = client.messages.create(
+        model=CLAUDE_MODEL,
+        max_tokens=MAX_TOKENS_CHAT,
+        system=_SYSTEM_PROMPT,
+        messages=history,
+    )
+    return response.content[0].text
 
 
 async def process_message(session: Session, user_message: str) -> str:
     """Procesa un mensaje de texto y retorna la respuesta del agente."""
     session.add_message("user", user_message)
-    _update_profile_from_response(session)
+    _refresh_profile_insights(session)
 
     if not settings.has_claude:
-        reply = _FALLBACK_RESPONSE if not session.history else (
-            "Para darte una orientación personalizada, necesito la API key de Claude configurada. "
-            "Por favor revisa el archivo .env y agrega tu ANTHROPIC_API_KEY."
-        )
+        reply = _reply_without_claude(session)
         session.add_message("assistant", reply)
         return reply
 
-    context = _build_context(session, user_message)
-
-    messages = session.get_recent_history(n=12)
-    if context:
-        # Inyectamos el contexto en el último mensaje del usuario
-        messages = messages[:-1] + [{
-            "role": "user",
-            "content": f"{context}\n\nMENSAJE DEL USUARIO: {user_message}"
-        }]
-
-    client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
-    response = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=1200,
-        system=_SYSTEM_PROMPT,
-        messages=messages,
-    )
-
-    reply = response.content[0].text
+    reply = await _call_claude(session, user_message)
     session.add_message("assistant", reply)
     return reply
 
 
 async def process_image_message(session: Session, image_base64: str, caption: str = "") -> str:
-    """Procesa un mensaje con imagen (foto de la vivienda)."""
-    from app.vision.analyzer import analyze_house_image
-
+    """Analiza la imagen de la vivienda y la incorpora al contexto de la conversación."""
     analysis = await analyze_house_image(image_base64)
     session.profile.imagen_vivienda_analizada = True
     session.profile.analisis_imagen = analysis
 
-    context_msg = caption or "El usuario compartió una foto de su vivienda."
-    full_message = f"{context_msg}\n\n[ANÁLISIS AUTOMÁTICO DE LA IMAGEN]:\n{analysis}"
-
-    return await process_message(session, full_message)
+    user_message = (
+        f"{caption}\n\n[ANÁLISIS AUTOMÁTICO DE LA IMAGEN]:\n{analysis}"
+        if caption
+        else f"El usuario compartió una foto de su vivienda.\n\n[ANÁLISIS]:\n{analysis}"
+    )
+    return await process_message(session, user_message)
