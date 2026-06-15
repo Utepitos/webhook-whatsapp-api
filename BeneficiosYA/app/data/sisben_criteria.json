@@ -1,0 +1,175 @@
+{
+  "version": "SISBEN IV",
+  "descripcion": "Criterios simplificados para aproximación del grupo SISBEN IV. El puntaje real lo calcula el DANE con un algoritmo propietario.",
+  "grupos": {
+    "A": {
+      "rango_puntaje": "0 - 11.68",
+      "descripcion": "Pobreza extrema / Alta vulnerabilidad",
+      "subgrupos": ["A1 (Indigencia urbana)", "A2 (Indigencia rural)", "A3 (Pobreza extrema urbana)", "A4 (Pobreza extrema rural)"]
+    },
+    "B": {
+      "rango_puntaje": "11.69 - 22.89",
+      "descripcion": "Pobreza moderada",
+      "subgrupos": ["B1", "B2", "B3", "B4"]
+    },
+    "C": {
+      "rango_puntaje": "22.90 - 47.99",
+      "descripcion": "Vulnerabilidad",
+      "subgrupos": ["C1", "C2", "C3", "C4"]
+    },
+    "D": {
+      "rango_puntaje": "48.00 en adelante",
+      "descripcion": "Clase media o superior",
+      "subgrupos": ["D1", "D2", "D3", "D4"]
+    }
+  },
+  "variables_evaluadas": {
+    "vivienda": {
+      "peso": "Alto",
+      "indicadores": {
+        "material_paredes": {
+          "muy_malo": ["Zinc", "Tela", "Cartón", "Plástico", "Madera burda", "Bahareque sin revoque"],
+          "malo": ["Madera burda", "Adobe", "Tapia pisada sin revoque"],
+          "regular": ["Bloque sin revocar", "Ladrillo sin revocar"],
+          "bueno": ["Bloque revocado", "Ladrillo revocado", "Piedra sillar"],
+          "muy_bueno": ["Concreto vaciado", "Materiales prefabricados de calidad"]
+        },
+        "material_techo": {
+          "muy_malo": ["Paja", "Palma", "Plástico", "Cartón", "Tela", "Desechos"],
+          "malo": ["Zinc sin cielo raso"],
+          "regular": ["Zinc con cielo raso", "Fibrocemento"],
+          "bueno": ["Teja de barro", "Teja de asbesto"],
+          "muy_bueno": ["Losa de concreto", "Losa alivianada"]
+        },
+        "material_pisos": {
+          "muy_malo": ["Tierra", "Arena"],
+          "malo": ["Madera burda", "Tablón de madera"],
+          "regular": ["Cemento", "Gravilla"],
+          "bueno": ["Baldosa", "Vinilo", "Tableta"],
+          "muy_bueno": ["Mármol", "Alfombra de calidad", "Parqué"]
+        },
+        "hacinamiento": {
+          "descripcion": "Número de personas por cuarto (excluyendo baños y cocina)",
+          "critico": "Más de 3 personas por cuarto",
+          "moderado": "Entre 2 y 3 personas por cuarto",
+          "adecuado": "Menos de 2 personas por cuarto"
+        }
+      }
+    },
+    "servicios_publicos": {
+      "peso": "Alto",
+      "indicadores": {
+        "agua": {
+          "sin_acceso": "Sin ningún acceso a agua",
+          "fuente_no_segura": "Río, pozo, manantial, carro tanque",
+          "acueducto_sin_tratar": "Acueducto sin tratamiento",
+          "acueducto_tratado": "Acueducto con tratamiento (servicio formal)"
+        },
+        "alcantarillado": {
+          "sin_acceso": "Sin sanitario o letrina",
+          "letrina_pozo": "Letrina o pozo séptico",
+          "alcantarillado": "Conectado a alcantarillado"
+        },
+        "energia": {
+          "sin_acceso": "Sin energía eléctrica",
+          "con_medidor": "Con medidor oficial",
+          "ilegal": "Conexión ilegal/pirata"
+        },
+        "gas_natural": {
+          "sin_acceso": "Sin gas (usa leña, carbón, gasolina)",
+          "cilindro": "Gas en cilindro/pipeta",
+          "red": "Gas por red"
+        },
+        "internet": {
+          "sin_acceso": "Sin internet",
+          "movil": "Solo internet móvil",
+          "fijo": "Internet fijo en hogar"
+        }
+      }
+    },
+    "composicion_hogar": {
+      "peso": "Medio",
+      "indicadores": {
+        "jefatura": {
+          "mujer_cabeza_hogar": "Mujer sola al frente del hogar (mayor riesgo)",
+          "hombre_jefe": "Hombre jefe de hogar",
+          "pareja": "Pareja al frente del hogar"
+        },
+        "presencia_menores": "Número de menores de 18 años en el hogar",
+        "presencia_adultos_mayores": "Personas de 60 años o más",
+        "presencia_discapacitados": "Miembros con discapacidad",
+        "presencia_gestantes": "Mujeres en estado de embarazo"
+      }
+    },
+    "capital_humano": {
+      "peso": "Medio-Alto",
+      "indicadores": {
+        "educacion_jefe_hogar": {
+          "ninguno": "Sin educación formal",
+          "primaria": "Primaria completa o incompleta",
+          "secundaria": "Secundaria completa o incompleta",
+          "tecnica": "Educación técnica o tecnológica",
+          "universitaria": "Educación universitaria o superior"
+        },
+        "ninos_escolarizados": "Porcentaje de niños 5-17 años que asisten al colegio",
+        "trabajo_infantil": "Presencia de menores trabajando"
+      }
+    },
+    "activos_del_hogar": {
+      "peso": "Medio",
+      "indicadores": {
+        "electrodomesticos": {
+          "basicos": ["Nevera", "Lavadora", "Televisor"],
+          "complementarios": ["Computador", "Horno microondas"],
+          "lujo": ["Aire acondicionado", "Carro propio", "Moto"]
+        },
+        "tenencia_vivienda": {
+          "propia_pagada": "Casa propia y pagada",
+          "propia_pagando": "Casa propia en proceso de pago",
+          "arrendada": "Casa en arriendo",
+          "prestada": "Casa prestada o cedida",
+          "invasion": "Invasión o asentamiento informal"
+        }
+      }
+    },
+    "capacidad_generacion_ingresos": {
+      "peso": "Alto",
+      "indicadores": {
+        "ocupacion": {
+          "desempleado": "Sin empleo y buscando",
+          "inactivo": "No trabaja ni busca (estudiante, ama de casa, incapacitado)",
+          "informal": "Trabajo informal (vendedor ambulante, jornalero, etc.)",
+          "formal_bajo": "Empleado formal con sueldo mínimo o inferior",
+          "formal_medio": "Empleado formal con más de un salario mínimo"
+        },
+        "ingreso_per_capita": {
+          "muy_bajo": "Menos de $150.000 COP por persona por mes",
+          "bajo": "Entre $150.000 y $300.000 COP por persona por mes",
+          "medio_bajo": "Entre $300.000 y $600.000 COP por persona por mes",
+          "medio": "Más de $600.000 COP por persona por mes"
+        }
+      }
+    }
+  },
+  "como_calcular_aproximacion": {
+    "nota": "Esta es una aproximación orientativa. El puntaje oficial solo lo determina el DANE mediante encuesta presencial.",
+    "factores_de_alto_riesgo": [
+      "Pisos de tierra",
+      "Paredes de material muy precario",
+      "Sin acceso a agua potable",
+      "Sin alcantarillado",
+      "Hacinamiento crítico (más de 3 por cuarto)",
+      "Jefa de hogar sin ingresos",
+      "Presencia de menores de 5 años o adultos mayores sin protección",
+      "Ningún miembro del hogar con empleo formal"
+    ],
+    "factores_de_mejora": [
+      "Vivienda propia",
+      "Electrodomésticos básicos",
+      "Internet en el hogar",
+      "Al menos un miembro con empleo formal",
+      "Nivel educativo técnico o superior del jefe de hogar",
+      "Todos los niños escolarizados"
+    ]
+  }
+}

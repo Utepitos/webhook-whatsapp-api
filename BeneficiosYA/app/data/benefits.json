@@ -1,0 +1,444 @@
+[
+  {
+    "id": "familias_en_accion",
+    "nombre": "Familias en Acción",
+    "entidad": "Departamento para la Prosperidad Social (DPS)",
+    "descripcion": "Transferencias monetarias condicionadas para familias con niños y adolescentes. Incentiva la asistencia escolar y controles de salud.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "composicion_familiar": "Tener hijos entre 0 y 18 años",
+      "sisben": "Grupos A o B del SISBEN IV",
+      "otros": ["Madres gestantes o lactantes", "No estar recibiendo pensión de vejez o invalidez mayor a un SMLV"]
+    },
+    "beneficio": {
+      "descripcion": "Transferencia monetaria bimestral",
+      "montos": {
+        "incentivo_salud_menor_6": "$100.000 COP bimestrales por niño menor de 6 años",
+        "incentivo_educacion_basica": "$40.000 COP bimestrales por niño en primaria",
+        "incentivo_educacion_media": "$75.000 COP bimestrales por joven en bachillerato"
+      }
+    },
+    "como_aplicar": [
+      "Verificar afiliación al SISBEN grupos A o B",
+      "Acercarse al punto de atención del DPS en el municipio",
+      "Inscribirse en el programa con cédula y documentos de los hijos",
+      "Los pagos se realizan a través de Supergiros, Bancolombia o transferencia"
+    ],
+    "documentos": ["Cédula del titular", "Registro civil de los hijos", "Carné de vacunación actualizado", "Certificado escolar de los hijos mayores de 5 años"],
+    "contacto": "prosperidadsocial.gov.co | Línea 01 8000 91 1785",
+    "url": "https://prosperidadsocial.gov.co/sgpp/transferencias/familias-en-accion/",
+    "aplica_para": ["madres_cabeza_hogar", "familias_con_hijos", "sisben_a", "sisben_b"]
+  },
+  {
+    "id": "colombia_mayor",
+    "nombre": "Colombia Mayor",
+    "entidad": "Colpensiones / DPS",
+    "descripcion": "Subsidio económico para adultos mayores en condición de pobreza extrema sin pensión ni ingresos suficientes.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "edad": "Mujeres 54 años o más / Hombres 59 años o más",
+      "sisben": "Grupos A o B del SISBEN IV",
+      "otros": ["No tener pensión o tenerla menor a $500.000 COP", "No estar vinculado laboralmente"]
+    },
+    "beneficio": {
+      "descripcion": "Subsidio económico mensual",
+      "montos": {
+        "subsidio_mensual": "Entre $80.000 y $160.000 COP mensuales según municipio"
+      }
+    },
+    "como_aplicar": [
+      "Verificar puntaje SISBEN A o B",
+      "Acudir al Centro de Vida o Casa de Bienestar del municipio",
+      "Inscribirse en el listado de espera de Colombia Mayor",
+      "Presentar cédula y comprobante de SISBEN"
+    ],
+    "documentos": ["Cédula de ciudadanía", "Certificado SISBEN", "Declaración de no pensión"],
+    "contacto": "colpensiones.com.co | Línea 01 8000 52 0025",
+    "url": "https://www.colpensiones.gov.co/Colombia-Mayor",
+    "aplica_para": ["adulto_mayor", "sisben_a", "sisben_b", "sin_pension"]
+  },
+  {
+    "id": "jovenes_en_accion",
+    "nombre": "Jóvenes en Acción",
+    "entidad": "Departamento para la Prosperidad Social (DPS)",
+    "descripcion": "Transferencia monetaria para jóvenes vulnerables que estudian en el SENA o instituciones de educación superior.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "edad": "Entre 14 y 28 años",
+      "sisben": "Grupos A, B o C del SISBEN IV",
+      "educacion": "Estar matriculado en SENA (técnico/tecnológico) o IES acreditada"
+    },
+    "beneficio": {
+      "descripcion": "Transferencia monetaria condicionada para sostenimiento",
+      "montos": {
+        "sena": "$200.000 COP mensuales para estudiantes SENA",
+        "ies": "$400.000 COP mensuales para estudiantes de IES"
+      }
+    },
+    "como_aplicar": [
+      "Estar matriculado en programa educativo habilitado",
+      "Registrarse en la plataforma de Jóvenes en Acción",
+      "Presentar certificado de matrícula vigente",
+      "Los pagos se realizan cada dos meses"
+    ],
+    "documentos": ["Cédula de ciudadanía", "Certificado de matrícula", "Certificado SISBEN", "Cuenta bancaria"],
+    "contacto": "prosperidadsocial.gov.co | Línea 01 8000 91 1785",
+    "url": "https://prosperidadsocial.gov.co/sgpp/transferencias/jovenes-en-accion/",
+    "aplica_para": ["jovenes", "estudiantes", "sisben_a", "sisben_b", "sisben_c"]
+  },
+  {
+    "id": "ingreso_solidario",
+    "nombre": "Ingreso Solidario",
+    "entidad": "Departamento para la Prosperidad Social (DPS)",
+    "descripcion": "Transferencia monetaria para hogares en pobreza o vulnerabilidad que no reciben ningún otro subsidio del Estado.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "sisben": "Grupos A o B",
+      "otros": ["No ser beneficiario de Familias en Acción, Colombia Mayor, Jóvenes en Acción ni DANZAS"]
+    },
+    "beneficio": {
+      "descripcion": "Transferencia monetaria periódica",
+      "montos": {
+        "transferencia": "$160.000 COP mensuales por hogar"
+      }
+    },
+    "como_aplicar": [
+      "La focalización es automática con base en SISBEN",
+      "Verificar si el hogar aparece en el listado oficial",
+      "Si no aparece, acudir a la Alcaldía para verificar el SISBEN",
+      "Registrar cuenta bancaria o método de cobro en DPS"
+    ],
+    "documentos": ["Cédula del titular", "Certificado SISBEN actualizado"],
+    "contacto": "prosperidadsocial.gov.co",
+    "url": "https://prosperidadsocial.gov.co/sgpp/transferencias/ingreso-solidario/",
+    "aplica_para": ["hogares_pobres", "sisben_a", "sisben_b", "sin_otros_subsidios"]
+  },
+  {
+    "id": "regimen_subsidiado_salud",
+    "nombre": "Régimen Subsidiado de Salud",
+    "entidad": "Ministerio de Salud y Protección Social",
+    "descripcion": "Acceso gratuito al sistema de salud para personas sin capacidad de pago. Cubre consultas, medicamentos, hospitalizaciones y cirugías.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "sisben": "Grupos A, B o C del SISBEN IV",
+      "otros": ["No estar afiliado al régimen contributivo", "No ser pensionado con ingresos suficientes"]
+    },
+    "beneficio": {
+      "descripcion": "Afiliación gratuita a EPS del régimen subsidiado",
+      "cobertura": "Plan de Beneficios en Salud completo: consultas, urgencias, hospitalizaciones, medicamentos, cirugías, odontología básica, salud mental"
+    },
+    "como_aplicar": [
+      "Verificar puntaje SISBEN",
+      "Acudir a la Alcaldía o Secretaría de Salud municipal",
+      "Escoger una EPS del régimen subsidiado disponible en su municipio",
+      "El proceso es gratuito y tarda máximo 8 días hábiles"
+    ],
+    "documentos": ["Cédula de ciudadanía o tarjeta de identidad", "Certificado SISBEN"],
+    "contacto": "Alcaldía Municipal / Secretaría de Salud | minsalud.gov.co",
+    "url": "https://www.minsalud.gov.co/salud/PServicios/Paginas/regimen-subsidiado.aspx",
+    "aplica_para": ["todos", "sisben_a", "sisben_b", "sisben_c", "sin_eps_contributiva"]
+  },
+  {
+    "id": "pae",
+    "nombre": "PAE - Programa de Alimentación Escolar",
+    "entidad": "Ministerio de Educación Nacional",
+    "descripcion": "Suministro de alimentos a estudiantes de instituciones educativas públicas para mejorar su rendimiento escolar y estado nutricional.",
+    "sisben_grupos": ["A", "B", "C", "D"],
+    "criterios_elegibilidad": {
+      "educacion": "Estar matriculado en institución educativa oficial",
+      "otros": ["Estudiantes de preescolar hasta grado 11 en colegios públicos"]
+    },
+    "beneficio": {
+      "descripcion": "Desayuno y/o almuerzo en días escolares",
+      "modalidades": ["Desayuno (merienda)", "Almuerzo", "Ración para llevar a casa"]
+    },
+    "como_aplicar": [
+      "El beneficio es automático para estudiantes en colegios públicos",
+      "Matricularse en institución educativa oficial",
+      "El programa opera directamente en el colegio"
+    ],
+    "documentos": ["Certificado de matrícula escolar"],
+    "contacto": "Rector de la institución educativa / mineducacion.gov.co",
+    "url": "https://www.mineducacion.gov.co/1759/w3-article-235135.html",
+    "aplica_para": ["ninos_escolarizados", "jovenes_escolarizados", "todos_sisben"]
+  },
+  {
+    "id": "matricula_cero",
+    "nombre": "Matrícula Cero (Gratuidad en Universidades Públicas)",
+    "entidad": "Ministerio de Educación Nacional",
+    "descripcion": "Exención del pago de matrícula en universidades públicas para estudiantes de estratos 1, 2 y 3 que sean admitidos.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "educacion": "Ser admitido en universidad pública acreditada",
+      "estrato": "Estratos 1, 2 o 3 / SISBEN A, B o C",
+      "otros": ["No tener título universitario previo"]
+    },
+    "beneficio": {
+      "descripcion": "Pago cero en matrícula universitaria",
+      "cobertura": "Cubre el valor total de la matrícula en la institución"
+    },
+    "como_aplicar": [
+      "Presentar el ICFES (Saber 11)",
+      "Inscribirse y ser admitido en una universidad pública",
+      "Solicitar el beneficio en la oficina de Bienestar Universitario",
+      "Presentar certificado de estrato o SISBEN"
+    ],
+    "documentos": ["Cédula", "Diploma de bachiller", "Resultados ICFES", "Certificado de estrato o SISBEN", "Carta de admisión"],
+    "contacto": "generacione.mineducacion.gov.co",
+    "url": "https://generacione.mineducacion.gov.co",
+    "aplica_para": ["jovenes", "universitarios", "sisben_a", "sisben_b", "sisben_c"]
+  },
+  {
+    "id": "generacion_e",
+    "nombre": "Generación E - Becas de Excelencia",
+    "entidad": "Ministerio de Educación Nacional",
+    "descripcion": "Beca completa (matrícula + sostenimiento) para los mejores puntajes ICFES del país provenientes de hogares vulnerables.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "icfes": "Percentil 90 o superior en Saber 11",
+      "sisben": "Grupos A o B",
+      "otros": ["Ser bachiller reciente o de los últimos 3 años"]
+    },
+    "beneficio": {
+      "descripcion": "Beca completa para educación superior",
+      "cobertura": "Matrícula + subsidio de manutención mensual (~$200.000 COP)"
+    },
+    "como_aplicar": [
+      "Verificar percentil ICFES en icfes.gov.co",
+      "Inscribirse en la convocatoria en generacione.mineducacion.gov.co",
+      "Aplicar a la universidad de tu elección",
+      "Presentar documentos de vulnerabilidad económica"
+    ],
+    "documentos": ["Cédula", "Resultados ICFES (percentil 90+)", "Certificado SISBEN A o B", "Diploma de bachiller"],
+    "contacto": "generacione.mineducacion.gov.co",
+    "url": "https://generacione.mineducacion.gov.co",
+    "aplica_para": ["jovenes", "alto_icfes", "sisben_a", "sisben_b"]
+  },
+  {
+    "id": "mi_casa_ya",
+    "nombre": "Mi Casa Ya",
+    "entidad": "Ministerio de Vivienda, Ciudad y Territorio",
+    "descripcion": "Subsidio para comprar vivienda de interés social nueva. El gobierno da un aporte directo al valor de la vivienda y a la tasa de interés del crédito.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "ingresos": "Hasta 8 Salarios Mínimos Legales Vigentes (SMLV)",
+      "sisben": "Grupos A, B o C",
+      "otros": ["No tener vivienda propia", "No haber recibido subsidio de vivienda antes", "Tener crédito hipotecario aprobado o contrato de leasing"]
+    },
+    "beneficio": {
+      "descripcion": "Subsidio en dinero para compra de vivienda",
+      "montos": {
+        "subsidio_valor": "Entre 20 y 30 SMLV según ingresos (~$25.000.000 a $37.000.000 COP)",
+        "subsidio_tasa": "Hasta 5 puntos porcentuales de reducción en tasa de interés"
+      }
+    },
+    "como_aplicar": [
+      "Buscar vivienda VIS (Vivienda de Interés Social) nueva",
+      "Solicitar crédito hipotecario en banco o caja de compensación",
+      "Con el crédito aprobado, aplicar al subsidio en minvivienda.gov.co",
+      "El subsidio se aplica directamente al valor de la vivienda"
+    ],
+    "documentos": ["Cédula", "Certificado de ingresos", "Extractos bancarios 3 meses", "Certificado SISBEN", "Promesa de compraventa de vivienda"],
+    "contacto": "minvivienda.gov.co | Línea 01 8000 91 1881",
+    "url": "https://www.minvivienda.gov.co/viceministerio-de-vivienda/mi-casa-ya",
+    "aplica_para": ["sin_vivienda", "familias", "sisben_a", "sisben_b", "sisben_c"]
+  },
+  {
+    "id": "subsidio_vivienda_rural",
+    "nombre": "Subsidio de Vivienda de Interés Social Rural",
+    "entidad": "Ministerio de Vivienda / Banco Agrario",
+    "descripcion": "Subsidio para construir o mejorar la vivienda en zonas rurales para familias campesinas de bajos recursos.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "ubicacion": "Vivir en zona rural",
+      "sisben": "Grupos A o B",
+      "otros": ["Ser propietario del lote o tener permiso de uso", "No haber recibido subsidio de vivienda antes"]
+    },
+    "beneficio": {
+      "descripcion": "Subsidio para construcción o mejoramiento de vivienda rural",
+      "montos": {
+        "construccion": "Hasta 70 SMLV para construcción nueva",
+        "mejoramiento": "Hasta 25 SMLV para mejoramiento"
+      }
+    },
+    "como_aplicar": [
+      "Acudir al Banco Agrario o a la Alcaldía municipal",
+      "Verificar convocatorias abiertas en minvivienda.gov.co",
+      "Presentar documentación del predio y situación socioeconómica",
+      "El proceso es evaluado por el operador del programa"
+    ],
+    "documentos": ["Cédula", "Certificado SISBEN", "Escritura del lote o autorización de uso", "Certificado de tradición y libertad del predio"],
+    "contacto": "bancoagrario.gov.co | minvivienda.gov.co",
+    "url": "https://www.minvivienda.gov.co",
+    "aplica_para": ["rural", "sin_vivienda", "sisben_a", "sisben_b"]
+  },
+  {
+    "id": "subsidio_servicios_publicos",
+    "nombre": "Subsidio a Servicios Públicos Domiciliarios",
+    "entidad": "Superintendencia de Servicios Públicos (SSPD)",
+    "descripcion": "Descuento en las tarifas de agua, luz y gas para hogares de estratos 1 y 2.",
+    "sisben_grupos": ["A", "B"],
+    "criterios_elegibilidad": {
+      "estrato": "Estrato 1 o 2 en zona urbana, o SISBEN A/B en rural",
+      "otros": ["Residir en el inmueble"]
+    },
+    "beneficio": {
+      "descripcion": "Descuento porcentual en tarifas de servicios públicos",
+      "montos": {
+        "estrato_1": "Descuento del 50% en energía y 70% en acueducto",
+        "estrato_2": "Descuento del 40% en energía y 40% en acueducto"
+      }
+    },
+    "como_aplicar": [
+      "El subsidio se aplica automáticamente según el estrato del inmueble",
+      "Si no aparece en el recibo, verificar el estrato en la Alcaldía",
+      "Para zonas rurales, acudir a la Secretaría de Planeación municipal"
+    ],
+    "documentos": ["Recibo de servicios públicos", "Cédula del titular"],
+    "contacto": "superservicios.gov.co",
+    "url": "https://www.superservicios.gov.co",
+    "aplica_para": ["estrato_1", "estrato_2", "sisben_a", "sisben_b"]
+  },
+  {
+    "id": "icbf_programas",
+    "nombre": "Programas ICBF (Bienestar Familiar)",
+    "entidad": "Instituto Colombiano de Bienestar Familiar (ICBF)",
+    "descripcion": "Conjunto de programas para protección y desarrollo de niños, adolescentes y familias en condición de vulnerabilidad.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "otros": ["Tener hijos menores de 5 años", "Familias en situación de riesgo o vulnerabilidad", "Mujeres gestantes o lactantes en pobreza"]
+    },
+    "beneficio": {
+      "descripcion": "Múltiples programas según necesidad",
+      "programas": [
+        "Hogares Comunitarios de Bienestar (HCB): cuidado y alimentación niños 0-5 años",
+        "Modalidad Familiar: apoyo nutricional y psicosocial a gestantes y niños hasta 2 años",
+        "Centros de Desarrollo Infantil (CDI): educación inicial para niños 0-5 años",
+        "De Cero a Siempre: atención integral primera infancia"
+      ]
+    },
+    "como_aplicar": [
+      "Acudir al Centro Zonal del ICBF más cercano",
+      "Verificar programas disponibles en tu municipio",
+      "Inscribir al niño o gestante en el programa que aplique"
+    ],
+    "documentos": ["Cédula del acudiente", "Registro civil del niño", "Carné de vacunación", "Controles prenatales (para gestantes)"],
+    "contacto": "icbf.gov.co | Línea 01 8000 91 8080",
+    "url": "https://www.icbf.gov.co",
+    "aplica_para": ["familias_con_hijos", "primera_infancia", "gestantes", "sisben_a", "sisben_b", "sisben_c"]
+  },
+  {
+    "id": "victimas_conflicto",
+    "nombre": "Atención a Víctimas del Conflicto Armado",
+    "entidad": "Unidad para la Atención y Reparación Integral a las Víctimas (UARIV)",
+    "descripcion": "Atención humanitaria, reparación y acceso preferencial a programas sociales para víctimas del conflicto armado colombiano.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "otros": ["Estar inscrito en el Registro Único de Víctimas (RUV)", "Haber sufrido desplazamiento forzado, homicidio de familiar, desaparición, secuestro u otro hecho victimizante"]
+    },
+    "beneficio": {
+      "descripcion": "Paquete de atención integral",
+      "programas": [
+        "Ayuda humanitaria de emergencia: alimentación y alojamiento temporal",
+        "Atención humanitaria de transición",
+        "Indemnización administrativa (según hecho victimizante)",
+        "Acceso preferencial a vivienda (Mi Casa Ya con cupo especial)",
+        "Prioridad en programas sociales (Familias en Acción, Colombia Mayor, etc.)",
+        "Atención psicosocial"
+      ]
+    },
+    "como_aplicar": [
+      "Declarar la condición de víctima ante la Personería Municipal o Defensoría del Pueblo",
+      "Esperar la inclusión en el RUV (máximo 60 días hábiles)",
+      "Una vez incluido, solicitar atención humanitaria en la UARIV o Alcaldía",
+      "Acceder a programas con la cédula y certificación del RUV"
+    ],
+    "documentos": ["Cédula de ciudadanía", "Declaración ante Personería o Defensoría", "Documentos que soporten el hecho victimizante (si los tiene)"],
+    "contacto": "unidadvictimas.gov.co | Línea 018000 91 1119",
+    "url": "https://www.unidadvictimas.gov.co",
+    "aplica_para": ["victimas_conflicto", "desplazados", "todos_sisben"]
+  },
+  {
+    "id": "discapacidad",
+    "nombre": "Programas para Personas con Discapacidad",
+    "entidad": "Ministerio de Salud / MSPS",
+    "descripcion": "Acceso a rehabilitación, ayudas técnicas y programas de inclusión para personas con discapacidad física, cognitiva, sensorial o mental.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "otros": ["Tener certificado de discapacidad", "Estar registrado en el RLCPD (Registro de Localización y Caracterización de Personas con Discapacidad)"]
+    },
+    "beneficio": {
+      "descripcion": "Múltiples apoyos y programas",
+      "programas": [
+        "Rehabilitación integral en IPS habilitadas",
+        "Ayudas técnicas (sillas de ruedas, audífonos, etc.)",
+        "Subsidio de transporte especial",
+        "Acceso preferencial a programas DPS",
+        "Programas de educación inclusiva",
+        "Pensión de invalidez (si aplica criterios)"
+      ]
+    },
+    "como_aplicar": [
+      "Obtener certificado de discapacidad en IPS habilitada o médico tratante",
+      "Registrarse en el RLCPD en la Alcaldía municipal",
+      "Solicitar valoración para ayudas técnicas en EPS",
+      "Acudir a la Secretaría de Salud para programas locales"
+    ],
+    "documentos": ["Cédula", "Certificado de discapacidad", "Historia clínica relevante"],
+    "contacto": "minsalud.gov.co | Alcaldía municipal",
+    "url": "https://www.minsalud.gov.co/proteccionsocial/Paginas/DisCapacidad.aspx",
+    "aplica_para": ["discapacidad", "todos_sisben"]
+  },
+  {
+    "id": "sena_gratuito",
+    "nombre": "Formación Profesional Gratuita - SENA",
+    "entidad": "Servicio Nacional de Aprendizaje (SENA)",
+    "descripcion": "Formación técnica y tecnológica completamente gratuita en centenares de programas. No requiere pago de matrícula.",
+    "sisben_grupos": ["A", "B", "C", "D"],
+    "criterios_elegibilidad": {
+      "otros": ["Ser bachiller o estar cursando 10° o 11°", "Cumplir requisitos específicos del programa"]
+    },
+    "beneficio": {
+      "descripcion": "Formación gratuita con posibilidad de contrato de aprendizaje",
+      "programas": ["Técnicos (1-1.5 años)", "Tecnólogos (2-3 años)", "Cursos cortos de actualización", "Formación virtual gratuita en Sofia Plus"]
+    },
+    "como_aplicar": [
+      "Registrarse en sofiaplus.edu.co",
+      "Buscar programas disponibles en tu ciudad",
+      "Inscribirse en el período de convocatoria",
+      "Presentar prueba de selección si hay cupos limitados"
+    ],
+    "documentos": ["Cédula o tarjeta de identidad", "Diploma de bachiller o constancia de grado"],
+    "contacto": "sena.edu.co | sofiaplus.edu.co | 018000 910 270",
+    "url": "https://www.sena.edu.co",
+    "aplica_para": ["jovenes", "adultos", "desempleados", "todos_sisben"]
+  },
+  {
+    "id": "beps",
+    "nombre": "BEPS - Beneficios Económicos Periódicos",
+    "entidad": "Colpensiones",
+    "descripcion": "Mecanismo de ahorro para personas de bajos ingresos que no pueden acceder a una pensión tradicional. El gobierno aporta un incentivo del 20% al ahorro.",
+    "sisben_grupos": ["A", "B", "C"],
+    "criterios_elegibilidad": {
+      "ingresos": "Ingresos mensuales inferiores a 1 SMLV",
+      "edad": "Mayores de 18 años",
+      "otros": ["No estar afiliado al régimen contributivo de pensión de forma activa"]
+    },
+    "beneficio": {
+      "descripcion": "Ahorro incentivado para vejez",
+      "montos": {
+        "incentivo": "El gobierno aporta el 20% adicional sobre lo ahorrado al llegar a la edad de retiro",
+        "vinculacion": "A partir de $5.000 COP por semana"
+      }
+    },
+    "como_aplicar": [
+      "Registrarse en beps.gov.co o acudir a un punto de servicio Colpensiones",
+      "Vincular un método de pago (billetera móvil, banco, corresponsal)",
+      "Hacer aportes voluntarios cuando puedas"
+    ],
+    "documentos": ["Cédula de ciudadanía"],
+    "contacto": "beps.gov.co | colpensiones.com.co | 01 8000 52 0025",
+    "url": "https://www.beps.gov.co",
+    "aplica_para": ["trabajadores_informales", "adultos", "sin_pension", "sisben_a", "sisben_b", "sisben_c"]
+  }
+]
