@@ -9,9 +9,21 @@ app.use(express.json());
 const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN;
 
+app.use((req, res, next) => {
+  if (req.path === '/webhook') {
+    console.log(`[Webhook] ${req.method} ${req.originalUrl}`);
+  }
+  next();
+});
+
 // WhatsApp webhook verification
 app.get('/webhook', (req, res) => {
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
+  console.log('[Webhook] Verificación recibida', {
+    mode,
+    hasChallenge: Boolean(challenge),
+    tokenMatches: token === verifyToken,
+  });
   if (mode === 'subscribe' && token === verifyToken) {
     console.log('Webhook verificado');
     return res.status(200).send(challenge);
