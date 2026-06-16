@@ -1,0 +1,373 @@
+[
+  {
+    "id": "sena_tecnica",
+    "nombre": "Formación Técnica - SENA",
+    "tipo": "tecnica",
+    "costo": "Completamente gratuita",
+    "entidad": "SENA",
+    "cobertura": "Nacional",
+    "duracion": "12 a 18 meses",
+    "requisitos": {
+      "icfes_minimo": null,
+      "edad_minima": 14,
+      "edad_maxima": null,
+      "estrato_max": null,
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Formación técnica gratuita en áreas como tecnología, agro, salud, comercio y más. No requiere puntaje ICFES. Ideal como primer paso hacia la educación superior.",
+    "programas_ejemplo": [
+      "Técnico en Programación de Software",
+      "Técnico en Gestión Empresarial",
+      "Técnico en Contabilización de Operaciones Comerciales",
+      "Técnico en Producción Agropecuaria"
+    ],
+    "documentos": [
+      "Cédula de ciudadanía o tarjeta de identidad",
+      "Diploma de bachiller o constancia de grado (10° si aún no terminas)",
+      "Foto tipo documento"
+    ],
+    "pasos": [
+      "Ingresa a sofiaplus.edu.co",
+      "Busca los programas disponibles en tu ciudad",
+      "Inscríbete en línea (es gratuito)",
+      "Espera la convocatoria y presenta prueba de clasificación",
+      "Inicio de clases según calendario SENA"
+    ],
+    "contacto": "sofiaplus.edu.co | Línea 018000910270",
+    "url": "https://www.sena.edu.co",
+    "etiquetas": ["gratuito", "sin_icfes", "tecnico", "nacional", "rapido"]
+  },
+  {
+    "id": "sena_tecnologica",
+    "nombre": "Formación Tecnológica - SENA",
+    "tipo": "tecnologica",
+    "costo": "Completamente gratuita",
+    "entidad": "SENA",
+    "cobertura": "Nacional",
+    "duracion": "24 a 36 meses",
+    "requisitos": {
+      "icfes_minimo": 200,
+      "edad_minima": 16,
+      "edad_maxima": null,
+      "estrato_max": null,
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Tecnólogos gratuitos equivalentes a 3er semestre universitario. Pueden articularse con universidades para completar el pregrado.",
+    "programas_ejemplo": [
+      "Análisis y Desarrollo de Software",
+      "Gestión de Mercados",
+      "Electrónica",
+      "Diseño Gráfico",
+      "Gestión de Talento Humano"
+    ],
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Diploma de bachiller",
+      "Resultados ICFES (Saber 11)",
+      "Foto tipo documento"
+    ],
+    "pasos": [
+      "Consulta el calendario en sofiaplus.edu.co",
+      "Selecciona el programa tecnológico de tu interés",
+      "Inscríbete en el período de convocatoria",
+      "Presenta la prueba de selección",
+      "Matrícula y inicio de formación"
+    ],
+    "contacto": "sofiaplus.edu.co | Línea 018000910270",
+    "url": "https://www.sena.edu.co",
+    "etiquetas": ["gratuito", "tecnologico", "nacional", "articulable"]
+  },
+  {
+    "id": "generacion_e_gratuidad",
+    "nombre": "Generación E - Componente Gratuidad",
+    "tipo": "subsidio_matricula",
+    "costo": "Matrícula cero en universidades públicas",
+    "entidad": "Ministerio de Educación Nacional",
+    "cobertura": "Nacional (universidades públicas)",
+    "duracion": "Toda la carrera universitaria",
+    "requisitos": {
+      "icfes_minimo": null,
+      "edad_minima": null,
+      "edad_maxima": null,
+      "estrato_max": 3,
+      "sisben": "Grupo A o B (puntaje menor a 57.21)",
+      "departamentos": ["todos"]
+    },
+    "descripcion": "El Gobierno cubre el valor de la matrícula en universidades públicas para estudiantes de estratos 1, 2 y 3 clasificados en SISBEN. El estudiante debe ser admitido por la universidad con sus propios méritos.",
+    "programas_ejemplo": [
+      "Cualquier programa de pregrado en universidades públicas acreditadas"
+    ],
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Documento SISBEN (certificado de puntaje)",
+      "Carta de admisión de la universidad",
+      "Recibo de pago de matrícula",
+      "Certificado de estrato socioeconómico"
+    ],
+    "pasos": [
+      "Presenta el ICFES (Saber 11) si aún no lo has hecho",
+      "Inscríbete a la universidad pública de tu elección",
+      "Si eres admitido, solicita el beneficio en la oficina de bienestar universitario",
+      "Presenta tu documentación SISBEN",
+      "La matrícula se paga directamente por el programa"
+    ],
+    "contacto": "generacione.mineducacion.gov.co",
+    "url": "https://generacione.mineducacion.gov.co",
+    "etiquetas": ["gratuito", "universitario", "estrato1-3", "sisben", "publico"]
+  },
+  {
+    "id": "generacion_e_excelencia",
+    "nombre": "Generación E - Componente Excelencia",
+    "tipo": "beca",
+    "costo": "Beca completa (matrícula + sostenimiento)",
+    "entidad": "Ministerio de Educación Nacional",
+    "cobertura": "Nacional (universidades públicas y privadas acreditadas)",
+    "duracion": "Toda la carrera universitaria",
+    "requisitos": {
+      "icfes_minimo": 310,
+      "icfes_descripcion": "Percentil 90 o superior en Saber 11",
+      "edad_minima": null,
+      "edad_maxima": null,
+      "estrato_max": 3,
+      "sisben": "Grupo A o B",
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Beca completa para los mejores puntajes ICFES del país que pertenezcan a familias de bajos recursos. Cubre matrícula más apoyo de sostenimiento mensual.",
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Resultados ICFES (percentil 90+)",
+      "Clasificación SISBEN",
+      "Carta de admisión de la institución elegida",
+      "Declaración de renta o carta de ingresos familiares"
+    ],
+    "pasos": [
+      "Verifica tu puntaje ICFES y percentil en el ICFES",
+      "Solicita tu clasificación SISBEN actualizada",
+      "Inscríbete a la convocatoria en el portal Generación E",
+      "Selecciona la universidad e inscríbete",
+      "Espera la asignación de la beca"
+    ],
+    "contacto": "generacione.mineducacion.gov.co",
+    "url": "https://generacione.mineducacion.gov.co",
+    "etiquetas": ["beca_completa", "alto_icfes", "estrato1-3", "universitario"]
+  },
+  {
+    "id": "icetex_acces",
+    "nombre": "Crédito ACCES - ICETEX",
+    "tipo": "credito_educativo",
+    "costo": "Crédito condonable al 25% si terminas la carrera",
+    "entidad": "ICETEX",
+    "cobertura": "Nacional",
+    "duracion": "Toda la carrera universitaria",
+    "requisitos": {
+      "icfes_minimo": 200,
+      "edad_minima": null,
+      "edad_maxima": null,
+      "estrato_max": 3,
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Crédito educativo para estratos 1, 2 y 3. Cubre matrícula y puede incluir apoyo de sostenimiento. Se paga después de graduarse con tasas muy bajas. El 25% se condona al graduarse.",
+    "montos": {
+      "matricula": "Hasta el 100% del valor de la matrícula",
+      "sostenimiento": "Hasta $450.000 COP mensuales adicionales"
+    },
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Carta de admisión de la institución educativa",
+      "Recibo de matrícula",
+      "Clasificación SISBEN o certificado de estrato",
+      "Codeudor (familiar o persona de confianza)",
+      "Declaración de renta del codeudor o certificado de ingresos"
+    ],
+    "pasos": [
+      "Inscríbete y sé admitido en una institución educativa",
+      "Ingresa a icetex.gov.co y crea tu cuenta",
+      "Solicita el crédito ACCES en el período de convocatoria",
+      "Consigue un codeudor con ingresos estables",
+      "Presenta la documentación requerida",
+      "Espera la aprobación (10-15 días hábiles)"
+    ],
+    "contacto": "icetex.gov.co | Línea 018000912227",
+    "url": "https://www.icetex.gov.co",
+    "etiquetas": ["credito", "condonable", "estrato1-3", "universitario", "tecnico"]
+  },
+  {
+    "id": "icetex_sostenimiento",
+    "nombre": "Subsidio de Sostenimiento - ICETEX",
+    "tipo": "subsidio",
+    "costo": "Apoyo económico mensual (no es crédito)",
+    "entidad": "ICETEX",
+    "cobertura": "Nacional",
+    "duracion": "Hasta 10 semestres",
+    "requisitos": {
+      "icfes_minimo": null,
+      "edad_minima": null,
+      "edad_maxima": null,
+      "estrato_max": 2,
+      "sisben": "Puntaje menor a 32 puntos",
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Apoyo económico mensual de hasta $450.000 COP para estudiantes de muy bajos recursos que ya están cursando educación superior. Complementa otros beneficios.",
+    "montos": {
+      "mensual": "Entre $300.000 y $450.000 COP mensuales"
+    },
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Certificado de matrícula vigente",
+      "Clasificación SISBEN actualizada",
+      "Certificado de notas del semestre anterior",
+      "Certificado de vulnerabilidad (si aplica)"
+    ],
+    "pasos": [
+      "Estar matriculado en una institución de educación superior",
+      "Solicitar clasificación SISBEN actualizada",
+      "Ingresar a icetex.gov.co en el período de convocatoria",
+      "Diligenciar el formulario de solicitud de sostenimiento",
+      "Adjuntar documentos requeridos"
+    ],
+    "contacto": "icetex.gov.co | Línea 018000912227",
+    "url": "https://www.icetex.gov.co",
+    "etiquetas": ["subsidio", "sostenimiento", "estrato1-2", "complementario"]
+  },
+  {
+    "id": "uptc_boyaca",
+    "nombre": "UPTC - Universidad Pedagógica y Tecnológica de Colombia",
+    "tipo": "universidad_publica",
+    "costo": "Muy bajo (por estrato). Con Gratuidad puede ser $0",
+    "entidad": "UPTC",
+    "cobertura": "Boyacá (Tunja, Chiquinquirá, Sogamoso, Duitama)",
+    "duracion": "8 a 10 semestres según programa",
+    "requisitos": {
+      "icfes_minimo": 250,
+      "icfes_descripcion": "Varía por programa. Promedio 280-350 para la mayoría",
+      "edad_minima": null,
+      "edad_maxima": null,
+      "departamentos": ["boyaca", "cundinamarca", "casanare", "arauca"]
+    },
+    "descripcion": "Principal universidad pública de Boyacá. Tiene seccionales en Tunja, Chiquinquirá, Sogamoso y Duitama. Con el programa Generación E (Gratuidad) los estratos 1-3 no pagan matrícula.",
+    "programas_ejemplo": [
+      "Ingeniería de Sistemas",
+      "Ingeniería Industrial",
+      "Medicina",
+      "Derecho",
+      "Administración de Empresas",
+      "Licenciaturas en Educación",
+      "Economía"
+    ],
+    "documentos": [
+      "Cédula de ciudadanía o tarjeta de identidad",
+      "Diploma y acta de grado de bachiller",
+      "Resultados ICFES (Saber 11)",
+      "Foto tipo documento",
+      "Recibo de agua o luz (para estrato)"
+    ],
+    "pasos": [
+      "Consulta el calendario de inscripciones en uptc.edu.co",
+      "Inscríbete en línea durante el período de inscripciones (cuesta ~$100.000)",
+      "Presenta el examen de admisión de la UPTC",
+      "Si eres admitido, tramita el beneficio Generación E si eres estrato 1-3",
+      "Matricúlate y comienza clases"
+    ],
+    "contacto": "uptc.edu.co | (8) 7405626",
+    "url": "https://www.uptc.edu.co",
+    "etiquetas": ["universitario", "boyaca", "publico", "estrato1-3_gratis"]
+  },
+  {
+    "id": "fondo_boyaca",
+    "nombre": "Fondo de Educación de Boyacá - Créditos Educativos",
+    "tipo": "credito_regional",
+    "costo": "Crédito blando (tasa baja, condonable parcialmente)",
+    "entidad": "Gobernación de Boyacá / ICETEX",
+    "cobertura": "Departamento de Boyacá",
+    "duracion": "Toda la carrera",
+    "requisitos": {
+      "icfes_minimo": null,
+      "residencia": "Boyacá (mínimo 2 años)",
+      "estrato_max": 3,
+      "departamentos": ["boyaca"]
+    },
+    "descripcion": "La Gobernación de Boyacá, en convenio con ICETEX, ofrece créditos educativos especiales para jóvenes boyacenses. Tiene condiciones favorables para estratos bajos.",
+    "documentos": [
+      "Cédula de ciudadanía",
+      "Certificado de residencia en Boyacá",
+      "Carta de admisión a institución educativa",
+      "Clasificación SISBEN",
+      "Codeudor"
+    ],
+    "pasos": [
+      "Verifica disponibilidad en la Gobernación de Boyacá",
+      "Ingresa a la plataforma ICETEX con convenio Boyacá",
+      "Presenta solicitud con documentos requeridos",
+      "Espera aprobación del crédito"
+    ],
+    "contacto": "Secretaría de Educación de Boyacá | boyaca.gov.co",
+    "url": "https://www.boyaca.gov.co",
+    "etiquetas": ["credito", "boyaca", "regional", "estrato1-3"]
+  },
+  {
+    "id": "beca_bicentenario",
+    "nombre": "Becas Bicentenario - Minciencias",
+    "tipo": "beca",
+    "costo": "Beca completa (matrícula + manutención + más)",
+    "entidad": "Minciencias (MinCiencias)",
+    "cobertura": "Nacional e internacional",
+    "duracion": "Toda la carrera (pregrado y posgrado)",
+    "requisitos": {
+      "icfes_minimo": 380,
+      "icfes_descripcion": "Percentil 95 o superior. Muy competitivo.",
+      "edad_minima": null,
+      "edad_maxima": null,
+      "estrato_max": 3,
+      "departamentos": ["todos"]
+    },
+    "descripcion": "Beca completa para los talentos más destacados del país. Cubre matrícula, manutención, tiquetes y gastos adicionales. Puede incluir oportunidades en el exterior.",
+    "documentos": [
+      "Resultados ICFES (percentil 95+)",
+      "Cédula de ciudadanía",
+      "Clasificación SISBEN",
+      "Hoja de vida académica",
+      "Carta de motivación",
+      "Certificados de logros académicos"
+    ],
+    "pasos": [
+      "Verifica tu percentil ICFES en la página del ICFES",
+      "Consulta la convocatoria en minciencias.gov.co",
+      "Prepara tu hoja de vida y carta de motivación",
+      "Inscríbete en el portal de convocatorias",
+      "Participa en el proceso de selección"
+    ],
+    "contacto": "minciencias.gov.co",
+    "url": "https://minciencias.gov.co",
+    "etiquetas": ["beca_completa", "muy_alto_icfes", "competitivo", "internacional"]
+  },
+  {
+    "id": "caja_compensacion",
+    "nombre": "Becas Cajas de Compensación Familiar",
+    "tipo": "beca_parcial",
+    "costo": "Beca parcial o total (depende de la caja)",
+    "entidad": "Cajas de Compensación (Comfaboy en Boyacá)",
+    "cobertura": "Regional",
+    "duracion": "Semestral (renovable)",
+    "requisitos": {
+      "afiliado": "El padre o madre debe ser empleado afiliado a la caja",
+      "icfes_minimo": null,
+      "departamentos": ["boyaca"]
+    },
+    "descripcion": "Las cajas de compensación ofrecen becas y subsidios educativos para hijos de afiliados. En Boyacá está Comfaboy. Si tu mamá trabaja formalmente, puede estar afiliada.",
+    "documentos": [
+      "Carné de afiliación de la caja de compensación",
+      "Cédula del estudiante",
+      "Certificado de admisión o matrícula",
+      "Certificado de ingresos del afiliado"
+    ],
+    "pasos": [
+      "Verifica si tu mamá o familiar está afiliado a Comfaboy u otra caja",
+      "Consulta los programas de becas disponibles",
+      "Solicita el formulario en la caja de compensación",
+      "Presenta los documentos requeridos"
+    ],
+    "contacto": "comfaboy.com.co",
+    "url": "https://www.comfaboy.com.co",
+    "etiquetas": ["beca", "boyaca", "empleados_formales", "comfaboy"]
+  }
+]
