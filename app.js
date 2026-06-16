@@ -1,12 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path');
-const { processMessage, MESSAGES } = require('./src/conversationFlow');
 const { sendMessage, extractMessage } = require('./src/whatsappClient');
+const { runPrediction } = require('./src/flowiseClient');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN || 'eduruta_demo_2024';
@@ -31,53 +29,23 @@ app.post('/webhook', async (req, res) => {
   console.log(`[WhatsApp] Mensaje de ${incoming.from}: ${incoming.text}`);
 
   try {
-    const { reply } = await processMessage(incoming.from, incoming.text);
+    const reply = await runPrediction({ question: incoming.text, sessionId: incoming.from });
     await sendMessage(incoming.from, reply);
   } catch (err) {
     console.error('Error procesando mensaje:', err.message);
   }
 });
 
-// API para el demo web
-app.post('/api/chat', async (req, res) => {
-  const { sessionId, message } = req.body;
-
-  if (!sessionId || !message) {
-    return res.status(400).json({ error: 'sessionId y message son requeridos' });
-  }
-
-  try {
-    const result = await processMessage(sessionId, message);
-    res.json(result);
-  } catch (err) {
-    console.error('Error en /api/chat:', err.message);
-    res.status(500).json({ error: 'Error interno del servidor', detail: err.message });
-  }
-});
-
-// Iniciar sesión de demo
-app.post('/api/start', (req, res) => {
-  const { sessionId } = req.body;
-  if (!sessionId) return res.status(400).json({ error: 'sessionId requerido' });
-
-  const { resetSession } = require('./src/sessionManager');
-  resetSession(sessionId);
-
-  res.json({ reply: MESSAGES.welcome, state: 'OPEN_CHAT' });
-});
-
-// Servir demo web
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Health check for hosting
+// Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
+app.get('/', (req, res) => {
+  res.json({ service: 'EduRuta AI', status: 'running' });
+});
+
 app.listen(port, () => {
   console.log(`\nEduRuta AI corriendo en http://localhost:${port}`);
-  console.log(`Demo web:     http://localhost:${port}/`);
-  console.log(`Webhook URL:  http://localhost:${port}/webhook\n`);
+  console.log(`Webhook URL: http://localhost:${port}/webhook\n`);
 });
