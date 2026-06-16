@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 const port = process.env.PORT || 3000;
-const verifyToken = process.env.VERIFY_TOKEN || 'eduruta_demo_2024';
+const verifyToken = process.env.VERIFY_TOKEN;
 
 // WhatsApp webhook verification
 app.get('/webhook', (req, res) => {
@@ -42,10 +42,9 @@ app.get('/health', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.json({ service: 'EduRuta AI', status: 'running' });
+  res.json({ service: 'EduRoute AI', status: 'running' });
 });
 
 app.listen(port, () => {
-  console.log(`\nEduRuta AI corriendo en http://localhost:${port}`);
   console.log(`Webhook URL: http://localhost:${port}/webhook\n`);
 });
