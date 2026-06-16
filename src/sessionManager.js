@@ -2,6 +2,7 @@ const sessions = new Map();
 
 const STATES = {
   WELCOME: 'WELCOME',
+  OPEN_CHAT: 'OPEN_CHAT',
   ASK_AGE: 'ASK_AGE',
   ASK_LOCATION: 'ASK_LOCATION',
   ASK_FAMILY: 'ASK_FAMILY',

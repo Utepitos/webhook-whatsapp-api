@@ -63,12 +63,17 @@ app.post('/api/start', (req, res) => {
   const { resetSession } = require('./src/sessionManager');
   resetSession(sessionId);
 
-  res.json({ reply: MESSAGES.welcome, state: 'ASK_AGE' });
+  res.json({ reply: MESSAGES.welcome, state: 'OPEN_CHAT' });
 });
 
 // Servir demo web
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Health check for hosting
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
 
 app.listen(port, () => {

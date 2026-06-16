@@ -1,17 +1,4 @@
-const Anthropic = require('@anthropic-ai/sdk');
-
-let client = null;
-
-function hasApiKey() {
-  return !!process.env.ANTHROPIC_API_KEY && process.env.ANTHROPIC_API_KEY !== 'your_claude_api_key_here';
-}
-
-function getClient() {
-  if (!client) {
-    client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  }
-  return client;
-}
+const { runPrediction, hasFlowiseConfig } = require('./flowiseClient');
 
 function fallbackResponse(matches) {
   if (!matches || matches.length === 0) {
@@ -83,54 +70,46 @@ TUS PRÓXIMOS PASOS:
 
 [Mensaje motivador]`;
 
-async function generateResponse(knowledgeContext, userMessage, history = [], matches = []) {
-  if (!hasApiKey()) {
-    console.log('[AI] Sin API key — usando modo fallback');
-    return fallbackResponse(matches);
+async function generateResponse(knowledgeContext, userMessage, history = [], matches = [], profile = {}, sessionId = null) {
+  if (hasFlowiseConfig()) {
+    try {
+      return await runPrediction({
+        question: userMessage,
+        knowledgeContext,
+        history,
+        matches,
+        profile,
+        sessionId,
+      });
+    } catch (err) {
+      console.error('[Flowise] Error ejecutando predicción:', err.message);
+      // If Flowise fails, fall back to deterministic local response
+      return fallbackResponse(matches);
+    }
   }
 
-  const anthropic = getClient();
-  const messages = [
-    ...history.slice(-6),
-    {
-      role: 'user',
-      content: `${knowledgeContext}\n\nPREGUNTA/MENSAJE DEL USUARIO: ${userMessage}`,
-    },
-  ];
-
-  const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1500,
-    system: SYSTEM_PROMPT,
-    messages,
-  });
-
-  return response.content[0].text;
+  // No Flowise configured: use deterministic fallback
+  return fallbackResponse(matches);
 }
 
-async function generateFollowup(profile, matchedPrograms, userQuestion, history = []) {
-  if (!hasApiKey()) {
-    return fallbackFollowup(userQuestion);
+async function generateFollowup(profile, matchedPrograms, userQuestion, history = [], sessionId = null) {
+  if (hasFlowiseConfig()) {
+    try {
+      return await runPrediction({
+        question: userQuestion,
+        knowledgeContext: `Seguimiento sobre orientación educativa. Perfil: ${JSON.stringify(profile)}`,
+        history,
+        matches: matchedPrograms,
+        profile,
+        sessionId,
+      });
+    } catch (err) {
+      console.error('[Flowise] Error ejecutando seguimiento:', err.message);
+      return fallbackFollowup(userQuestion);
+    }
   }
 
-  const anthropic = getClient();
-  const context = `PERFIL: ${JSON.stringify(profile)}
-PROGRAMAS RECOMENDADOS: ${matchedPrograms.map((p) => p.nombre).join(', ')}
-PREGUNTA DEL USUARIO: ${userQuestion}`;
-
-  const messages = [
-    ...history.slice(-6),
-    { role: 'user', content: context },
-  ];
-
-  const response = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 800,
-    system: SYSTEM_PROMPT,
-    messages,
-  });
-
-  return response.content[0].text;
+  return fallbackFollowup(userQuestion);
 }
 
-module.exports = { generateResponse, generateFollowup, hasApiKey };
+module.exports = { generateResponse, generateFollowup };

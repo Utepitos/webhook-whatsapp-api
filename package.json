@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "smoke": "node tests/flowiseClient.smoke.js",
+    "smoke:conversation": "node tests/conversationFlow.smoke.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.27.0",
+    
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2"
