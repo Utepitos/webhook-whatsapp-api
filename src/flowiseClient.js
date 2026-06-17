@@ -73,7 +73,7 @@ async function runPrediction({ question, knowledgeContext, history = [], matches
           'Content-Type': 'application/json',
           ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
         },
-        timeout: Number(process.env.FLOWISE_TIMEOUT_MS || 15000),
+        timeout: Number(process.env.FLOWISE_TIMEOUT_MS || 30000),
       }
     );
   } catch (err) {
