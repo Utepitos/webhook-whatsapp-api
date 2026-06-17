@@ -17,18 +17,14 @@ assert.deepStrictEqual(history, [
 
 const body = buildPredictionBody({
   question: 'Tengo 17 años y vivo en Boyacá',
-  knowledgeContext: 'contexto',
   history: [{ role: 'assistant', content: 'previo' }],
-  matches: [{ id: 'sena_tecnica', nombre: 'SENA' }],
-  profile: { age: 17, department: 'Boyacá' },
   sessionId: 'demo-1',
 });
 
 assert.strictEqual(body.question, 'Tengo 17 años y vivo en Boyacá');
 assert.strictEqual(body.streaming, false);
 assert.strictEqual(body.overrideConfig.sessionId, 'demo-1');
-assert.strictEqual(body.overrideConfig.vars.knowledgeContext, 'contexto');
-assert.ok(body.overrideConfig.vars.matches.includes('sena_tecnica'));
+assert.strictEqual(Object.keys(body.overrideConfig).length, 1);
 
 assert.strictEqual(normalizePredictionResponse({ text: '  Hola mundo  ' }), 'Hola mundo');
 assert.strictEqual(normalizePredictionResponse({ result: 'respuesta' }), 'respuesta');

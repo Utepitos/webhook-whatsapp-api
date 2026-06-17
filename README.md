@@ -1,142 +1,61 @@
-# EduRuta AI
+# EduRoute AI
 
-Servidor Node.js para recibir mensajes de WhatsApp, enviarlos a Flowise y devolver orientación educativa por chat.
+EduRoute AI is a WhatsApp assistant that helps young people in Colombia discover higher-education opportunities in a simple, human, and conversational way.
 
-## Flujo
+Instead of searching across multiple websites and confusing forms, users can ask their questions directly in WhatsApp and receive clear guidance about programs, requirements, documents, and next steps.
 
-Usuario -> WhatsApp -> API de WhatsApp -> servidor -> Flowise -> servidor -> API de WhatsApp -> usuario.
+## Why it matters
 
-## Variables de entorno
+For many students, access to higher education is blocked not only by cost, but also by lack of clear information.
 
-- `PORT`
-- `VERIFY_TOKEN`
-- `FLOWISE_URL`
-- `FLOWISE_FLOW_ID`
-- `FLOWISE_API_KEY`
-- `FLOWISE_TIMEOUT_MS`
-- `WHATSAPP_TOKEN`
-- `WHATSAPP_PHONE_ID`
+EduRoute AI reduces that friction by turning a complex process into a guided conversation.
 
-## Ejecutar
+## What it does
 
-```bash
-npm install
-npm run smoke
-npm run dev
-```
+- Receives questions through WhatsApp.
+- Sends the conversation to Flowise using the current message and chat history.
+- Returns a clear response back to WhatsApp.
+- Keeps the conversation open for follow-up questions.
 
-## Contrato Flowise
+## Example questions
 
-El servidor llama `POST /api/v1/prediction/{flowId}` con `question`, `history` y `overrideConfig.vars`.
+- "I am 18 and I live in Boyacá. What options do I have?"
+- "I cannot afford private university. What free programs are available?"
+- "What documents do I need to apply?"
+- "I already have an ICFES score. What can I do with it?"
 
-Si Flowise falla, el servidor usa respuestas deterministas locales (fallback) en lugar de una API externa.
+## How it works
 
-## Plantilla de prompt para Flowise
+1. The user sends a WhatsApp message.
+2. The bot receives the request and processes it.
+3. The message and chat history are sent to the AI engine.
+4. A helpful response is returned to WhatsApp in a clear format.
 
-He incluido una plantilla de prompt optimizada para EduRuta en el archivo `FLOWISE_PROMPT.md`. Esa plantilla contiene:
+## What the user receives
 
-- El `system prompt` (tono y reglas de comportamiento).
-- Formato de respuesta esperado (opciones numeradas, documentos, próximos pasos, mensaje motivador).
-- Variables `overrideConfig.vars` esperadas: `knowledgeContext`, `profile`, `matches`, `history`, `sessionId`.
-- Sugerencias de configuración del LLM: `temperature: 0.0-0.3`, `max_tokens`, y guardrails para evitar alucinaciones.
+- Helpful answers based on the ongoing conversation.
+- Simple explanations.
+- A friendly response in WhatsApp.
+- A friendly and motivating tone.
 
-Revisa `FLOWISE_PROMPT.md` y pega ese texto en el nodo de generación de tu flow en Flowise (el que tu compañero ya creó).
+## Current status
 
-## Despliegue y testeo
+The bot is already connected to WhatsApp and can receive and reply to real messages.
 
-1) Preparar entorno:
+## Main technologies
 
-```bash
-cp .env.example .env
-# Edita .env con tus valores reales: FLOWISE_URL, FLOWISE_FLOW_ID, FLOWISE_API_KEY, WHATSAPP_TOKEN, WHATSAPP_PHONE_ID, VERIFY_TOKEN
-npm install
-```
+- Node.js
+- Express
+- WhatsApp Cloud API
+- Flowise
+- Render
 
-2) Ejecutar localmente:
+## Project value
 
-```bash
-npm run dev
-```
+EduRoute AI makes educational guidance accessible in the channel people already use every day: WhatsApp.
 
-3) Probar la integración Flowise directamente (prueba rápida con curl):
+It is designed to feel less like a form and more like a helpful conversation.
 
-Reemplaza `${FLOWISE_URL}` y `${FLOWISE_FLOW_ID}` en el siguiente comando y asegúrate de tener `FLOWISE_API_KEY` si tu instancia lo requiere.
+## Final note
 
-```bash
-curl -X POST "${FLOWISE_URL}/api/v1/prediction/${FLOWISE_FLOW_ID}" \
-	-H "Content-Type: application/json" \
-	-H "Authorization: Bearer ${FLOWISE_API_KEY}" \
-	-d '{
-		"question": "Prueba: dame 2 opciones para alguien de 18 años en Boyacá que no puede pagar",
-		"history": [],
-		"stream": false,
-		"overrideConfig": {
-			"vars": {
-				"knowledgeContext": "[TEXTO_CON_PROGRAMAS_VERIFICADOS]",
-				"profile": {"age":18,"department":"Boyacá","canPay":false},
-				"matches": []
-			},
-			"sessionId": "session-test-1"
-		}
-	}'
-```
-
-4) Probar el servidor localmente con ngrok (para simular webhook de WhatsApp):
-
-```bash
-# instala ngrok y expon el puerto 3000
-ngrok http 3000
-# copia la URL HTTPS que te da ngrok y configúrala como webhook en la consola de Facebook/Meta
-```
-
-5) Verifica que el webhook reciba mensajes y que el servidor haga la llamada a Flowise (revisar logs). Las rutas útiles son `/webhook` y `/api/chat` (si activaste endpoints de prueba).
-
-6) Despliegue en producción (Render / Heroku / VPS):
-
-- Subir código a tu repositorio y en el servicio de hosting configurar las variables de entorno del proyecto con los valores de `FLOWISE_*` y `WHATSAPP_*`.
-- Asegúrate de tener un certificado TLS (Render/Heroku lo proveen) y que la URL pública esté configurada como webhook en la app de WhatsApp Cloud.
-- Ajusta `FLOWISE_TIMEOUT_MS` según latencia de tu instancia Flowise.
-
-6) Monitoreo y seguridad:
-
-- Mantén `temperature` bajo en Flowise.
-- Anota logs de llamadas a Flowise y errores para detectar fallos.
-- Considera persistir sesiones en Redis si tu despliegue será multi-instancia.
-
-## Despliegue en Render con Blueprint
-
-Si vas a usar Render, ya tienes un blueprint listo en `render.yaml`.
-
-Pasos:
-
-1. Sube este repo a GitHub.
-2. En Render, elige `New` -> `Blueprint`.
-3. Conecta el repo y selecciona la rama principal.
-4. Render leerá `render.yaml` y creará el servicio `eduruta-ai`.
-5. Completa las variables marcadas como secretas:
-	- `VERIFY_TOKEN`
-	- `FLOWISE_URL`
-	- `FLOWISE_FLOW_ID`
-	- `FLOWISE_API_KEY` si aplica
-	- `WHATSAPP_TOKEN`
-	- `WHATSAPP_PHONE_ID`
-6. Verifica que el health check use `/health`.
-7. Copia la URL pública y configúrala como webhook en Meta/WhatsApp: `https://<tu-servicio>.onrender.com/webhook`.
-
-Ventaja del blueprint:
-- Te evita configurar manualmente build/start commands.
-- Deja el despliegue reproducible y versionado junto al código.
-
-Archivos de apoyo para Render:
-- `RENDER_ENV_VARS.md`: lista exacta de variables para copiar y pegar.
-- `POST_DEPLOY_RENDER_CHECKLIST.md`: verificación rápida después del deploy.
-
-Si quieres, puedo:
-- pegar el contenido listo para el nodo de LLM en Flowise (formato copia/pega),
-- o generar un `post-deploy checklist` con pasos exactos para Render/Heroku.
-
--- Guía específica para Render
-
-He añadido `DEPLOY_RENDER.md` con una checklist paso a paso para desplegar en Render (con variables de entorno, health check, Redis opcional y pruebas post-deploy).
-
-Consulta `DEPLOY_RENDER.md` para la guía completa.
+This project aims to make educational orientation faster, clearer, and more human for students who need it most.

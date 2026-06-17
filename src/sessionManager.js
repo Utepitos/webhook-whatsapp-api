@@ -3,12 +3,6 @@ const sessions = new Map();
 const STATES = {
   WELCOME: 'WELCOME',
   OPEN_CHAT: 'OPEN_CHAT',
-  ASK_AGE: 'ASK_AGE',
-  ASK_LOCATION: 'ASK_LOCATION',
-  ASK_FAMILY: 'ASK_FAMILY',
-  ASK_INCOME: 'ASK_INCOME',
-  ASK_ICFES: 'ASK_ICFES',
-  RESULTS: 'RESULTS',
   FOLLOWUP: 'FOLLOWUP',
 };
 
@@ -17,7 +11,6 @@ function getSession(sessionId) {
     sessions.set(sessionId, {
       id: sessionId,
       state: STATES.WELCOME,
-      profile: {},
       history: [],
       createdAt: Date.now(),
     });

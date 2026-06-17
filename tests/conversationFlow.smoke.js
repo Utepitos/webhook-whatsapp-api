@@ -49,7 +49,8 @@ async function main() {
   assert.strictEqual(captured[0].url, '/api/v1/prediction/demo-flow');
   assert.strictEqual(captured[0].body.question, 'Tengo 17 años, vivo en Boyacá, mi mamá es cabeza de hogar y no puedo pagar universidad. Saqué 340 en el ICFES.');
   assert.strictEqual(captured[0].body.streaming, false);
-  assert.ok(captured[0].body.overrideConfig.vars.knowledgeContext.includes('PERFIL DEL ESTUDIANTE'));
+  assert.strictEqual(captured[0].body.overrideConfig.sessionId, sessionId);
+  assert.strictEqual(Object.keys(captured[0].body.overrideConfig).length, 1);
 
   server.close();
   console.log('Conversation smoke test OK');

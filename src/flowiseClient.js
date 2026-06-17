@@ -13,19 +13,12 @@ function buildHistory(history = []) {
     }));
 }
 
-function buildPredictionBody({ question, knowledgeContext, history = [], matches = [], profile = {}, sessionId = null }) {
+function buildPredictionBody({ question, history = [], sessionId = null }) {
   return {
     question,
     streaming: false,
     history: buildHistory(history),
-    overrideConfig: {
-      sessionId,
-      vars: {
-        knowledgeContext,
-        profile: JSON.stringify(profile),
-        matches: JSON.stringify(matches),
-      },
-    },
+    overrideConfig: { sessionId },
     uploads: [],
     form: {},
     humanInput: {},
@@ -50,7 +43,7 @@ function normalizePredictionResponse(data) {
   return '';
 }
 
-async function runPrediction({ question, knowledgeContext, history = [], matches = [], profile = {}, sessionId = null }) {
+async function runPrediction({ question, history = [], sessionId = null }) {
   if (!hasFlowiseConfig()) {
     throw new Error('Flowise no está configurado');
   }
@@ -59,7 +52,7 @@ async function runPrediction({ question, knowledgeContext, history = [], matches
   const flowId = process.env.FLOWISE_FLOW_ID;
   const apiKey = process.env.FLOWISE_API_KEY;
 
-  const body = buildPredictionBody({ question, knowledgeContext, history, matches, profile, sessionId });
+  const body = buildPredictionBody({ question, history, sessionId });
   console.log('[Flowise] Enviando a:', `${baseUrl}/api/v1/prediction/${flowId}`);
   console.log('[Flowise] Body enviado:', JSON.stringify(body));
 
