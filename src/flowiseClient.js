@@ -37,6 +37,16 @@ function normalizePredictionResponse(data) {
   if (typeof data.text === 'string' && data.text.trim()) return data.text.trim();
   if (typeof data.result === 'string' && data.result.trim()) return data.result.trim();
   if (typeof data.output === 'string' && data.output.trim()) return data.output.trim();
+  if (typeof data.answer === 'string' && data.answer.trim()) return data.answer.trim();
+  if (typeof data.message === 'string' && data.message.trim()) return data.message.trim();
+  if (typeof data.response === 'string' && data.response.trim()) return data.response.trim();
+  // Respuesta anidada: { outputs: [{ text: "..." }] }
+  if (Array.isArray(data.outputs) && data.outputs.length > 0) {
+    const first = data.outputs[0];
+    const nested = first?.text || first?.result || first?.output || first?.answer;
+    if (typeof nested === 'string' && nested.trim()) return nested.trim();
+  }
+  console.error('[Flowise] Estructura de respuesta no reconocida:', JSON.stringify(data));
   return '';
 }
 
@@ -61,6 +71,8 @@ async function runPrediction({ question, knowledgeContext, history = [], matches
     }
   );
 
+  console.log('[Flowise] Respuesta HTTP status:', response.status);
+  console.log('[Flowise] Respuesta data:', JSON.stringify(response.data));
   const text = normalizePredictionResponse(response.data);
   if (!text) {
     throw new Error('Flowise no devolvió un campo de texto utilizable');
