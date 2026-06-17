@@ -9,21 +9,32 @@ async function sendMessage(to, text) {
     return;
   }
 
-  await axios.post(
-    `https://graph.facebook.com/v19.0/${phoneId}/messages`,
-    {
-      messaging_product: 'whatsapp',
-      to,
-      type: 'text',
-      text: { body: text },
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+  try {
+    const response = await axios.post(
+      `https://graph.facebook.com/v19.0/${phoneId}/messages`,
+      {
+        messaging_product: 'whatsapp',
+        to,
+        type: 'text',
+        text: { body: text },
       },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log('[Meta] Mensaje enviado OK, status:', response.status);
+  } catch (err) {
+    if (err.response) {
+      console.error('[Meta] Error HTTP:', err.response.status);
+      console.error('[Meta] Detalle:', JSON.stringify(err.response.data));
+    } else {
+      console.error('[Meta] Error de red:', err.message);
     }
-  );
+    throw err;
+  }
 }
 
 function extractMessage(body) {
