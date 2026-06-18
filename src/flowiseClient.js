@@ -54,7 +54,6 @@ async function runPrediction({ question, history = [], sessionId = null }) {
 
   const body = buildPredictionBody({ question, history, sessionId });
   console.log('[Flowise] Enviando a:', `${baseUrl}/api/v1/prediction/${flowId}`);
-  console.log('[Flowise] Body enviado:', JSON.stringify(body));
 
   let response;
   try {
@@ -82,7 +81,6 @@ async function runPrediction({ question, history = [], sessionId = null }) {
   }
 
   console.log('[Flowise] HTTP status:', response.status);
-  console.log('[Flowise] Respuesta data:', JSON.stringify(response.data));
   const text = normalizePredictionResponse(response.data);
   if (!text) {
     throw new Error('Flowise no devolvió un campo de texto utilizable');

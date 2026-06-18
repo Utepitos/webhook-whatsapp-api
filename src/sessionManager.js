@@ -1,3 +1,5 @@
+const SESSION_TTL_MS = 30 * 60 * 1000;
+
 const sessions = new Map();
 
 const STATES = {
@@ -6,23 +8,30 @@ const STATES = {
   FOLLOWUP: 'FOLLOWUP',
 };
 
+function createSession(sessionId) {
+  const now = Date.now();
+  return { id: sessionId, state: STATES.WELCOME, history: [], createdAt: now, updatedAt: now };
+}
+
+function isExpired(session) {
+  return Date.now() - session.updatedAt > SESSION_TTL_MS;
+}
+
 function getSession(sessionId) {
-  if (!sessions.has(sessionId)) {
-    sessions.set(sessionId, {
-      id: sessionId,
-      state: STATES.WELCOME,
-      history: [],
-      createdAt: Date.now(),
-    });
+  const existing = sessions.get(sessionId);
+  if (!existing || isExpired(existing)) {
+    const fresh = createSession(sessionId);
+    sessions.set(sessionId, fresh);
+    return fresh;
   }
-  return sessions.get(sessionId);
+  return existing;
 }
 
 function updateSession(sessionId, updates) {
   const session = getSession(sessionId);
-  Object.assign(session, updates);
-  sessions.set(sessionId, session);
-  return session;
+  const updated = { ...session, ...updates, updatedAt: Date.now() };
+  sessions.set(sessionId, updated);
+  return updated;
 }
 
 function resetSession(sessionId) {

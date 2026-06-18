@@ -39,7 +39,7 @@ async function main() {
 
   const first = await processMessage(sessionId, 'Hola');
   assert.strictEqual(first.state, 'OPEN_CHAT');
-  assert.ok(first.reply.includes('EduRuta AI'));
+  assert.ok(first.reply.includes('EduRoute AI'));
 
   const second = await processMessage(sessionId, 'Tengo 17 años, vivo en Boyacá, mi mamá es cabeza de hogar y no puedo pagar universidad. Saqué 340 en el ICFES.');
   assert.strictEqual(second.state, 'FOLLOWUP');

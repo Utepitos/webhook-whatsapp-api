@@ -1,17 +1,21 @@
 const axios = require('axios');
 
+const GRAPH_API_VERSION = 'v19.0';
+const GRAPH_API_BASE_URL = `https://graph.facebook.com/${GRAPH_API_VERSION}`;
+
 async function sendMessage(to, text) {
   const token = process.env.WHATSAPP_TOKEN;
   const phoneId = process.env.WHATSAPP_PHONE_ID;
 
   if (!token || !phoneId) {
-    console.log('[WhatsApp] Modo demo - mensaje no enviado:', text.slice(0, 80) + '...');
+    const preview = text.length > 80 ? `${text.slice(0, 80)}…` : text;
+    console.log('[WhatsApp] Modo demo — mensaje no enviado:', preview);
     return;
   }
 
   try {
     const response = await axios.post(
-      `https://graph.facebook.com/v19.0/${phoneId}/messages`,
+      `${GRAPH_API_BASE_URL}/${phoneId}/messages`,
       {
         messaging_product: 'whatsapp',
         to,

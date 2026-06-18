@@ -1,62 +1,81 @@
 require('dotenv').config();
+const crypto = require('crypto');
 const express = require('express');
 const { sendMessage, extractMessage } = require('./src/whatsappClient');
-const { runPrediction } = require('./src/flowiseClient');
+const { processMessage } = require('./src/conversationFlow');
 
 const app = express();
-app.use(express.json());
-
 const port = process.env.PORT || 3000;
-const verifyToken = process.env.VERIFY_TOKEN;
 
-app.use((req, res, next) => {
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+
+app.use((req, _res, next) => {
   if (req.path === '/webhook') {
     console.log(`[Webhook] ${req.method} ${req.originalUrl}`);
   }
   next();
 });
 
-// WhatsApp webhook verification
+function isValidWebhookSignature(rawBody, signature) {
+  const secret = process.env.WHATSAPP_APP_SECRET;
+  if (!secret) return true;
+  if (!signature) return false;
+  const expected = `sha256=${crypto.createHmac('sha256', secret).update(rawBody).digest('hex')}`;
+  try {
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
+  } catch {
+    return false;
+  }
+}
+
 app.get('/webhook', (req, res) => {
   const { 'hub.mode': mode, 'hub.challenge': challenge, 'hub.verify_token': token } = req.query;
-  console.log('[Webhook] Verificación recibida', {
-    mode,
-    hasChallenge: Boolean(challenge),
-    tokenMatches: token === verifyToken,
-  });
-  if (mode === 'subscribe' && token === verifyToken) {
-    console.log('Webhook verificado');
+  if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
+    console.log('[Webhook] Verificación exitosa');
     return res.status(200).send(challenge);
   }
   res.status(403).end();
 });
 
-// WhatsApp webhook messages
 app.post('/webhook', async (req, res) => {
+  if (!isValidWebhookSignature(req.rawBody, req.headers['x-hub-signature-256'])) {
+    console.warn('[Webhook] Firma inválida — solicitud rechazada');
+    return res.status(401).end();
+  }
+
   res.status(200).end();
 
   const incoming = extractMessage(req.body);
   if (!incoming || incoming.type !== 'text') return;
 
-  console.log(`[WhatsApp] Mensaje de ${incoming.from}: ${incoming.text}`);
+  console.log(`[WhatsApp] Mensaje entrante de ${incoming.from}`);
 
   try {
-    const reply = await runPrediction({ question: incoming.text, sessionId: incoming.from });
+    const { reply } = await processMessage(incoming.from, incoming.text);
     await sendMessage(incoming.from, reply);
   } catch (err) {
-    console.error('Error procesando mensaje:', err.message);
+    console.error('[Webhook] Error procesando mensaje:', err.message);
   }
 });
 
-// Health check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({ service: 'EduRoute AI', status: 'running' });
 });
 
-app.listen(port, () => {
-  console.log(`Webhook URL: http://localhost:${port}/webhook\n`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`[App] Servidor iniciado — webhook: http://localhost:${port}/webhook`);
+  });
+}
+
+module.exports = app;
