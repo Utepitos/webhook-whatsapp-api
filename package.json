@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "smoke": "node tests/flowiseClient.smoke.js",
+    "smoke": "node tests/n8nClient.smoke.js",
     "smoke:conversation": "node tests/conversationFlow.smoke.js"
   },
   "dependencies": {

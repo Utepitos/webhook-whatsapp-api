@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { sendMessage, extractMessage } = require('./src/whatsappClient');
-const { runPrediction } = require('./src/flowiseClient');
+const { runPrediction } = require('./src/n8nClient');
 
 const app = express();
 app.use(express.json());
