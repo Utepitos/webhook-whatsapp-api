@@ -1,12 +1,12 @@
-# EduRoute AI
+# Tara
 
-EduRoute AI is a WhatsApp assistant that receives a user's message, keeps the conversation history, sends the request to an n8n workflow, and returns the workflow response back to WhatsApp.
+Tara is a WhatsApp assistant that receives a user's message, keeps the conversation history, sends the request to an n8n workflow, and returns the workflow response back to WhatsApp.
 
 It is designed to reduce the friction of asking for educational guidance by turning a complex process into a simple chat.
 
 ## Overview
 
-EduRoute AI acts as a thin orchestration layer between WhatsApp and n8n. The bot does not store a knowledge base in code and does not try to answer educational questions on its own. Instead, it forwards each user message to n8n together with the chat history, then sends the generated reply back to WhatsApp.
+Tara acts as a thin orchestration layer between WhatsApp and n8n. The bot does not store a knowledge base in code and does not try to answer educational questions on its own. Instead, it forwards each user message to n8n together with the chat history, then sends the generated reply back to WhatsApp.
 
 This keeps the backend lightweight and makes the AI behavior easy to change inside the n8n workflow.
 
