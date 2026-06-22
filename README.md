@@ -1,12 +1,12 @@
-# EduRoute AI
+# Tara AI
 
-EduRoute AI is a WhatsApp-based conversational assistant that helps young people in Colombia navigate higher-education opportunities. Instead of searching across multiple websites and confusing forms, students can ask questions directly in WhatsApp and receive clear, personalized guidance about programs, admission requirements, documents, and next steps.
+Tara fAI is a WhatsApp-based conversational assistant that helps young people in Colombia navigate higher-education opportunities. Instead of searching across multiple websites and confusing forms, students can ask questions directly in WhatsApp and receive clear, personalized guidance about programs, admission requirements, documents, and next steps.
 
 ---
 
 ## Project Overview
 
-Access to higher education in Colombia is blocked not only by cost, but also by a lack of clear, accessible information — especially for students in rural or low-income contexts. EduRoute AI addresses this directly: it meets students where they already are (WhatsApp) and turns a complex, fragmented process into a single guided conversation.
+Access to higher education in Colombia is blocked not only by cost, but also by a lack of clear, accessible information — especially for students in rural or low-income contexts. Tara AI addresses this directly: it meets students where they already are (WhatsApp) and turns a complex, fragmented process into a single guided conversation.
 
 The assistant can answer questions such as:
 
