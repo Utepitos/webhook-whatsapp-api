@@ -1,6 +1,6 @@
-# Tara
+# Tara AI
 
-Tara is a WhatsApp assistant that receives a user's message, keeps the conversation history, sends the request to an n8n workflow, and returns the workflow response back to WhatsApp.
+Tara AI is a WhatsApp assistant that receives a user's message, keeps the conversation history, sends the request to an n8n workflow, and returns the workflow response back to WhatsApp.
 
 It is designed to reduce the friction of asking for educational guidance by turning a complex process into a simple chat.
 
