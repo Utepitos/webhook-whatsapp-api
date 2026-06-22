@@ -1,6 +1,6 @@
 # Tara AI
 
-Tara fAI is a WhatsApp-based conversational assistant that helps young people in Colombia navigate higher-education opportunities. Instead of searching across multiple websites and confusing forms, students can ask questions directly in WhatsApp and receive clear, personalized guidance about programs, admission requirements, documents, and next steps.
+Tara AI is a WhatsApp-based conversational assistant that helps young people in Colombia navigate higher-education opportunities. Instead of searching across multiple websites and confusing forms, students can ask questions directly in WhatsApp and receive clear, personalized guidance about programs, admission requirements, documents, and next steps.
 
 ---
 
