@@ -2,7 +2,7 @@ const { getSession, updateSession, resetSession, STATES } = require('./sessionMa
 const { generateResponse, generateFollowup } = require('./aiClient');
 
 const MESSAGES = {
-  welcome: `¡Hola! Soy *EduRoute AI* 🎓
+  welcome: `¡Hola! Soy *Tara AI* 🎓
 
 Cuéntame tu situación con libertad y te orientaré.`,
 
@@ -10,7 +10,7 @@ Cuéntame tu situación con libertad y te orientaré.`,
     `Hubo un problema temporal procesando tu solicitud. Intenta de nuevo en unos segundos o escribe *"reiniciar"* para comenzar.`,
 
   reset: () =>
-    `Listo, empecemos de nuevo.\n\n¡Hola! Soy *EduRoute AI* 🎓\nCuéntame tu situación con libertad.`,
+    `Listo, empecemos de nuevo.\n\n¡Hola! Soy *Tara AI* 🎓\nCuéntame tu situación con libertad.`,
 };
 
 async function processMessage(sessionId, userMessage) {
